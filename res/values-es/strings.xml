@@ -1,0 +1,36 @@
+<resources>
+
+    <string name="add_entry">Añadir entrada</string>
+    <string name="add_file_or_dir">Añadir</string>
+    <string name="button_select">Elegir</string>
+    <string name="check_delete">Eliminado</string>
+    <string name="check_modified">Archivo Modificado</string>
+    <string name="check_new_file">Archivo Nuevo</string>
+    <string name="delete">Eliminar</string>
+    <string name="dialog_button">Usar este</string>
+    <string name="dialog_dst_title">Selecionar un directorio destino</string>
+    <string name="dialog_src_title">Selecionar un directorio origen</string>
+    <string name="file_monitor_started">File Monitor Iniciado</string>
+    <string name="file_monitor_stopped">File Monitor Parado</string>
+    <string name="hello_world">¡Hola Mundo!</string>
+    <string name="label_actions">Acciones</string>
+    <string name="label_dst">Directorio Destino</string>
+    <string name="label_events">Eventos</string>
+    <string name="label_file">Directorio Origen</string>
+    <string name="menu_settings">Configuraciones</string>
+    <string-array name="spinner_actions">
+        <item >Copiar</item>
+        <item >Mover</item>
+        <item >Eliminar</item>
+        <item >Añadir a Biblioteca Multimedia</item>
+    </string-array>
+    <string name="service_label">File Monitor &amp; Backup</string>
+    <string name="service_description">Monitorea archivos y directorios, y los respalda</string>
+    <string name="restart_service">Reiniciar Servicio</string>
+    <string name="quit">Salir</string>
+    <string name="title_activity_instant_backup">Instant Backup</string>
+    <string name="app_name">Instant Backup</string>
+    <string name="options">Opciones</string>
+    <string name="title_activity_add_file">Añadir direcotorio a escanear</string>
+
+</resources>
