@@ -1,3 +1,22 @@
+/*
+ *  This file is part of Instant Backup
+ *  AddFile.java - Add file Activity for FileMonitor.
+ *  Copyright (C) 2012  Joel Peláez Jorge <joelpelaez@gmail.com>
+ * 
+ *  Instant Backup is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Instant Backup is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Instant Backup.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package org.darksoft.android.tools.instantbackup;
 
 import org.darksoft.android.nativelib.inotify.Inotify;
@@ -6,6 +25,7 @@ import org.openintents.intents.FileManagerIntents;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -16,6 +36,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AddFile extends Activity {
 
@@ -30,7 +51,7 @@ public class AddFile extends Activity {
 	private CheckBox mCheckBoxModified = null;
 	private CheckBox mCheckBoxDeleted = null;
 	private Spinner mSpinnerAction = null;
-	
+
 	private View.OnClickListener mSrcListener = new View.OnClickListener() {
 
 		@Override
@@ -55,7 +76,12 @@ public class AddFile extends Activity {
 					.getString(R.string.dialog_dst_title));
 			intent.putExtra(FileManagerIntents.EXTRA_BUTTON_TEXT,
 					getResources().getString(R.string.dialog_button));
-			startActivityForResult(intent, REQUEST_DST_DIR);
+			try {
+				startActivityForResult(intent, REQUEST_DST_DIR);
+			} catch (ActivityNotFoundException e) {
+				Toast.makeText(AddFile.this, R.string.error_pick,
+						Toast.LENGTH_LONG).show();
+			}
 		}
 	};
 	private View.OnClickListener mAddlistener = new View.OnClickListener() {
@@ -110,8 +136,8 @@ public class AddFile extends Activity {
 	private OnItemSelectedListener SpinnerItem = new OnItemSelectedListener() {
 
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view, 
-	            int pos, long id) {
+		public void onItemSelected(AdapterView<?> parent, View view, int pos,
+				long id) {
 			if (pos == 0 || pos == 1) {
 				mEditTextDst.setEnabled(true);
 				mButtonDst.setEnabled(true);
@@ -124,10 +150,10 @@ public class AddFile extends Activity {
 		@Override
 		public void onNothingSelected(AdapterView<?> parent) {
 			// TODO Auto-generated method stub
-			
+
 		}
 	};
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

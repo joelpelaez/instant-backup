@@ -33,5 +33,6 @@
     <string name="dialog_dst_title">Select a directory to destination</string>
     <string name="dialog_button">Use this</string>
     <string name="options">Options</string>
+    <string name="error_pick">Error in pick directory</string>
 
 </resources>

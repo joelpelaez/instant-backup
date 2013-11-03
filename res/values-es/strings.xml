@@ -32,5 +32,6 @@
     <string name="app_name">Instant Backup</string>
     <string name="options">Opciones</string>
     <string name="title_activity_add_file">Añadir direcotorio a escanear</string>
+    <string name="error_pick">Error al escoger directorio</string>
 
 </resources>
