@@ -60,7 +60,6 @@ public class FileMonitor extends Service {
 	private SparseArray<FileAction> mActionTable;
 	private NotificationManager mNM;
 	private InotifyDataSource datasource;
-	// private PowerManager.WakeLock mWakeLock;
 
 	private IBinder mBinder = new LocalBinder();
 

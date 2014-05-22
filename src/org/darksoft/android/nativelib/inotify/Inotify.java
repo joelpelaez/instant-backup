@@ -280,8 +280,6 @@ public class Inotify {
 	private native int nativeInotifyAddWatch(String mName, long mMask);
 
 	private native void nativeInotifyRmWatch(int mWatcher);
-
-	private native Event nativeInotifyGetEvent();
 	
 	private native void nativeInotifyClose();
 	
