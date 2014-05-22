@@ -1,8 +1,8 @@
 /*
  *  This file is part of Instant Backup
  *  FileAction.java - File actions for Inotify interface.
- *  Copyright (C) 2012  Joel Peláez Jorge <joelpelaez@gmail.com>
- * 
+ *  Copyright (C) 2012-2014  Joel Peláez Jorge <joelpelaez@gmail.com>
+ *
  *  Instant Backup is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
