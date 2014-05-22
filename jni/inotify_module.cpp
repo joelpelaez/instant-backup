@@ -31,7 +31,7 @@
 
 #include <android/log.h>
 
-#define LOG_TAG "Inotify"
+#define LOG_TAG "DarkSoft Inotify Module"
 
 #define LOG_INFO(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 
@@ -63,6 +63,7 @@ static void
 Inotify_nativeInotifyInit(JNIEnv *env, jobject obj)
 {
   int fd = -1;
+  LOG_INFO("Init Inotify Module");
   fd = inotify_init();
 
   if (fd == -1)
@@ -99,29 +100,6 @@ Inotify_nativeInotifyRmWatch(JNIEnv *env, jobject obj, jint watcher)
 {
   int fd = env->GetIntField(obj, fields_list.descriptor);
   inotify_rm_watch(fd, watcher);
-}
-
-static jobject
-Inotify_nativeInotifyGetEvent(JNIEnv *env, jobject obj)
-{
-  int fd = env->GetIntField(obj, fields_list.descriptor);
-  jclass clazz = env->FindClass(class_event_name);
-  jmethodID constructor = env->GetMethodID(clazz, "<init>", "()V");
-  jobject obj_event = env->NewObject(clazz, constructor);
-  jint wd = env->GetIntField(obj_event, fields_list.watcher);
-
-  struct inotify_event *ev;
-  ev = (struct inotify_event *) malloc(
-      sizeof(struct inotify_event) + NAME_MAX + 1);
-  memset(ev, 0, sizeof(struct inotify_event) + NAME_MAX + 1);
-  read(fd, ev, sizeof(struct inotify_event) + NAME_MAX + 1);
-  jstring name = NULL;
-  if (ev->name)
-    name = env->NewStringUTF(ev->name);
-  env->SetObjectField(obj_event, fields_list.name, name);
-  env->SetIntField(obj_event, fields_list.watcher, ev->wd);
-  env->SetLongField(obj_event, fields_list.mask, ev->mask);
-  return obj_event;
 }
 
 static void
@@ -167,9 +145,6 @@ static JNINativeMethod inotifyMethods[] =
     { "nativeInotifyAddWatch", "(Ljava/lang/String;J)I",
         (void *) Inotify_nativeInotifyAddWatch },
     { "nativeInotifyRmWatch", "(I)V", (void *) Inotify_nativeInotifyRmWatch },
-    { "nativeInotifyGetEvent",
-        "()Lorg/darksoft/android/nativelib/inotify/Inotify$Event;",
-        (void *) Inotify_nativeInotifyGetEvent },
     { "nativeInotifyClose", "()V", (void *) Inotify_nativeInotifyClose },
     { "nativeSetFileDescriptor", "(Ljava/io/FileDescriptor;)V",
         (void *) Inotify_nativeSetFileDescriptor },
@@ -180,17 +155,17 @@ static JNINativeMethod inotifyMethods[] =
 jint
 JNI_OnLoad(JavaVM *vm, void *reserved)
 {
-  LOG_INFO("IN Inotify Module");
+  LOG_INFO("In Inotify Module");
   JNIEnv *env;
 
   if (vm->GetEnv((void **) &env, JNI_VERSION_1_4) != JNI_OK)
     {
-      LOG_INFO("IN Inotify Module: Exit with -1");
+      LOG_INFO("In Inotify Module: Exit with -1");
       return -1;
     }
-  LOG_INFO("IN Inotify Module: FindClass");
+  LOG_INFO("In Inotify Module: FindClass");
   jclass clazz = env->FindClass(class_inotify_name);
-  LOG_INFO("IN Inotify Module: Registering Natives");
+  LOG_INFO("In Inotify Module: Registering Natives");
   env->RegisterNatives(clazz, inotifyMethods, sizeof(inotifyMethods));
 
   LOG_INFO("In Inotify Module: Getting Fields ID");
@@ -202,6 +177,7 @@ JNI_OnLoad(JavaVM *vm, void *reserved)
   jclass fdclass = env->FindClass(class_file_descriptor);
   fields_list.fd = env->GetFieldID(fdclass, "descriptor", "I");
 
-  LOG_INFO("IN Inotify Module: Exit with Version");
+  LOG_INFO("IN Inotify Module: Exit with Version %d", JNI_VERSION_1_4);
+
   return JNI_VERSION_1_4;
 }
